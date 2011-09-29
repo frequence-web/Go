@@ -4,3 +4,6 @@
 [submodule "vendor/symfony/src/Symfony/Component/Console"]
 	path = vendor/symfony/src/Symfony/Component/Console
 	url = git@github.com:symfony/Console.git
+[submodule "vendor/scm"]
+	path = vendor/scm
+	url = https://github.com/jfsimon/scm

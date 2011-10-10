@@ -17,9 +17,9 @@ class Rsync implements StrategyInterface
     }
 
 
-    public function deploy(Deployer $deployer)
+    public function deploy(Deployer $deployer, $go)
     {
-        $commandLine  = 'rsync --dry-run -azC --force --delete --progress -e "ssh -p'.$deployer->getPort().'"';
+        $commandLine  = 'rsync -azC --force --delete --progress -e "ssh -p'.$deployer->getPort().'"';
 
         foreach ($deployer->getExclude() as $exclude) {
             $commandLine .= ' --exclude='.$exclude;
@@ -27,6 +27,10 @@ class Rsync implements StrategyInterface
 
         $commandLine .= ' '.getcwd().'/ ';
         $commandLine .= $deployer->getUser().'@'.$deployer->getHost().':'.$deployer->getRemoteDir();
+
+        if ($go !== true) {
+            $commandLine .= ' --dry-run';
+        }
 
         $that = $this;
         $process = new Process($commandLine, getcwd());

@@ -6,5 +6,5 @@ use \Go\Deployer\Deployer;
 
 interface StrategyInterface
 {
-    public function deploy(Deployer $deployer);
+    public function deploy(Deployer $deployer, $go);
 }

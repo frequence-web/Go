@@ -2,18 +2,31 @@
 
 namespace Go\Deployer;
 
-class Deployer
+use \OOSSH\SSH2\Connection;
+
+abstract class Deployer
 {
     protected $config;
+
+    /**
+     * @var \OOSSH\SSH2\Connection
+     */
+    protected $ssh;
 
     function __construct($config)
     {
         $this->config = $config;
     }
 
-    public function deploy($strategy)
+    abstract function preDeploy();
+
+    abstract function postDeploy();
+
+    public function deploy($strategy, $go)
     {
-        return $strategy->deploy($this);
+        $this->preDeploy($go);
+        $strategy->deploy($this, $go);
+        $this->postDeploy($go);
     }
 
     public function getHost()
@@ -59,6 +72,19 @@ class Deployer
         }
 
         return $this->config['exclude'];
+    }
+
+    protected function getSshAuthentication()
+    {
+        throw new \RuntimeException('You must override the getSshAuthentication method to use SSH');
+    }
+
+    protected function initSsh()
+    {
+        if (null === $this->ssh) {
+            $this->ssh = new Connection($this->getHost(), $this->getPort());
+            $this->ssh->authenticate($this->getSshAuthentication());
+        }
     }
 
 }

@@ -51,5 +51,10 @@ EOF
             $input->getArgument('dir').'/deploy.yml',
             file_get_contents(__DIR__.'/../../../data/skeleton/deploy.yml')
         );
+
+        $this->filesystem->write(
+            $input->getArgument('dir').'/Deploy.php',
+            file_get_contents(__DIR__.'/../../../data/skeleton/Deploy.php')
+        );
     }
 }

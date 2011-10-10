@@ -12,7 +12,7 @@ class Go extends Application
   {
       parent::__construct('Go deployment tool', self::VERSION);
 
-      $this->add(new Command\Tag);
       $this->add(new Command\Init);
+      $this->add(new Command\Deploy());
   }
 }

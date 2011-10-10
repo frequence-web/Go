@@ -1,8 +1,9 @@
 production:
-    method: rsync
+    strategy: rsync
     host:   your.host
     port:   22
     user:   deploy
+    remote_dir: /var/www/
     exclude:
         - .git
         - .svn

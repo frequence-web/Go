@@ -44,11 +44,7 @@ EOF
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->filesystem->write('.go/config.yml', Yaml::dump(array(
-           'Go' => array(
-               'config' => array(
-                   'dir' => $input->getArgument('dir')
-               )
-           )
+           'config_dir' => $input->getArgument('dir')
         )));
 
         $this->filesystem->write(

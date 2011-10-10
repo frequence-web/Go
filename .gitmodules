@@ -4,9 +4,6 @@
 [submodule "vendor/symfony/src/Symfony/Component/Console"]
 	path = vendor/symfony/src/Symfony/Component/Console
 	url = git@github.com:symfony/Console.git
-[submodule "vendor/scm"]
-	path = vendor/scm
-	url = https://github.com/jfsimon/scm
 [submodule "vendor/OOSSH"]
 	path = vendor/OOSSH
 	url = git@github.com:frequence-web/OOSSH.git
@@ -16,3 +13,6 @@
 [submodule "vendor/symfony/src/Symfony/Component/Yaml"]
 	path = vendor/symfony/src/Symfony/Component/Yaml
 	url = git@github.com:symfony/Yaml.git
+[submodule "vendor/symfony/src/Symfony/Component/Process"]
+	path = vendor/symfony/src/Symfony/Component/Process
+	url = git@github.com:symfony/Process.git

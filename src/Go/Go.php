@@ -11,5 +11,7 @@ class Go extends Application
   public function __construct()
   {
       parent::__construct('Go deployment tool', self::VERSION);
+
+      $this->add(new Command\Tag());
   }
 }

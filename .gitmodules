@@ -7,3 +7,6 @@
 [submodule "vendor/scm"]
 	path = vendor/scm
 	url = https://github.com/jfsimon/scm
+[submodule "vendor/OOSSH"]
+	path = vendor/OOSSH
+	url = git@github.com:frequence-web/OOSSH.git

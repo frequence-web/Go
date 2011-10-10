@@ -4,8 +4,9 @@ require_once __DIR__ . '/../vendor/symfony/src/Symfony/Component/ClassLoader/Uni
 
 $loader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
 $loader->registerNamespaces(array(
-     'Go'      => __DIR__,
-     'Symfony' => __DIR__.'/../vendor/symfony/src'
+     'Go'        => __DIR__,
+     'Symfony'   => __DIR__.'/../vendor/symfony/src',
+     'Gaufrette' => __DIR__.'/../vendor/Gaufrette/src'
 ));
 
 $loader->register();

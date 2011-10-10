@@ -1,0 +1,11 @@
+production:
+    method: rsync
+    host:   your.host
+    port:   22
+    user:   deploy
+    exclude:
+        - .git
+        - .svn
+        - .idea
+        - .hg
+        - nbproject

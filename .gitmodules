@@ -10,3 +10,9 @@
 [submodule "vendor/OOSSH"]
 	path = vendor/OOSSH
 	url = git@github.com:frequence-web/OOSSH.git
+[submodule "vendor/Gaufrette"]
+	path = vendor/Gaufrette
+	url = git@github.com:knplabs/Gaufrette.git
+[submodule "vendor/symfony/src/Symfony/Component/Yaml"]
+	path = vendor/symfony/src/Symfony/Component/Yaml
+	url = git@github.com:symfony/Yaml.git

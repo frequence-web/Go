@@ -11,7 +11,10 @@ use \Symfony\Component\Console\Input\InputInterface,
 use \Gaufrette\Filesystem,
     \Gaufrette\Adapter\Local;
 
-use \Go\Exception\AlreadyAGoDirectoryException;
+use \Go\Exception\AlreadyAGoDirectoryException,
+    \Go\Deployer\Deployer,
+    \Go\Deployer\Deploy as AppDeployer,
+    \Go\Deployer\Strategy\Rsync;
 
 class Deploy extends Command
 {
@@ -36,7 +39,7 @@ EOF
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         require_once $this->getSetting('config_dir').'/Deploy.php';
-        $deployer = new \Go\Deployer\Deploy($this->getConfig($input->getArgument('env')));
-        $deployer->deploy(new \Go\Deployer\Strategy\Rsync($output), $input->getOption('go'));
+        $deployer = new AppDeployer($this->getConfig($input->getArgument('env')), $output);
+        $deployer->deploy(new Rsync($output), $input->getOption('go'));
     }
 }

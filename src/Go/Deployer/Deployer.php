@@ -2,6 +2,8 @@
 
 namespace Go\Deployer;
 
+use \Symfony\Component\Console\Output\OutputInterface;
+
 use \OOSSH\SSH2\Connection;
 
 abstract class Deployer
@@ -9,13 +11,19 @@ abstract class Deployer
     protected $config;
 
     /**
+     * @var \Symfony\Component\Console\Output\OutputInterface
+     */
+    protected $output;
+
+    /**
      * @var \OOSSH\SSH2\Connection
      */
     protected $ssh;
 
-    function __construct($config)
+    function __construct($config, OutputInterface $output)
     {
         $this->config = $config;
+        $this->output = $output;
     }
 
     abstract function preDeploy();
@@ -24,9 +32,14 @@ abstract class Deployer
 
     public function deploy($strategy, $go)
     {
-        $this->preDeploy($go);
+        if (false !== $go) {
+            $this->preDeploy($go);
+        }
         $strategy->deploy($this, $go);
-        $this->postDeploy($go);
+
+        if (false !== $go) {
+            $this->postDeploy($go);
+        }
     }
 
     public function getHost()
@@ -79,12 +92,47 @@ abstract class Deployer
         throw new \RuntimeException('You must override the getSshAuthentication method to use SSH');
     }
 
-    protected function initSsh()
+    /**
+     * @return \OOSSH\SSH2\Connection
+     */
+    protected function getSsh()
     {
         if (null === $this->ssh) {
             $this->ssh = new Connection($this->getHost(), $this->getPort());
-            $this->ssh->authenticate($this->getSshAuthentication());
+            $this->ssh
+                ->connect()
+                ->authenticate($this->getSshAuthentication());
         }
+
+        return $this->ssh;
+    }
+
+    protected function exec($command)
+    {
+        $that = $this;
+        $this->getSsh()->exec($command, function($stdio, $stderr) use ($that)
+            {
+                $that->addOutput($stdio);
+                $that->addOutput($stderr);
+            }
+        );
+
+        return $this;
+    }
+
+    protected function sudo($command)
+    {
+        return $this->exec('sudo '.$command);
+    }
+
+    protected function symfony($command)
+    {
+        return $this->exec('php symfony '.$command);
+    }
+
+    public function addOutput($output)
+    {
+        $this->output->write($output);
     }
 
 }

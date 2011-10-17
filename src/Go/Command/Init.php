@@ -4,8 +4,7 @@ namespace Go\Command;
 
 use \Symfony\Component\Console\Input\InputInterface,
     \Symfony\Component\Console\Output\OutputInterface,
-    \Symfony\Component\Console\Input\InputArgument,
-    \Symfony\Component\Yaml\Yaml;
+    \Symfony\Component\Console\Input\InputArgument;
 
 use \Gaufrette\Filesystem,
     \Gaufrette\Adapter\Local;
@@ -43,7 +42,7 @@ EOF
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->filesystem->write('.go/config.yml', Yaml::dump(array(
+        $this->filesystem->write('.go/config.json', json_encode(array(
            'config_dir' => $input->getArgument('dir')
         )));
 

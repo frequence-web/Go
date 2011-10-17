@@ -51,7 +51,7 @@ abstract class Command extends BaseCommand
     protected function getSetting($setting)
     {
         if (null === $this->systemConfig) {
-            $this->systemConfig = Yaml::parse($this->filesystem->read('.go/config.yml'));
+            $this->systemConfig = json_decode($this->filesystem->read('.go/config.json'));
         }
 
         return $this->systemConfig[$setting];

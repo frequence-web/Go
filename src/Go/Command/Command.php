@@ -10,7 +10,9 @@ use \Symfony\Component\Console\Command\Command as BaseCommand,
 use \Gaufrette\Filesystem,
     \Gaufrette\Adapter\Local;
 
-use \Go\Exception\NotAGoDirectoryException;
+use \Go\Exception\NotAGoDirectoryException,
+    \Go\Config\JsonConfig,
+    \Go\Config\YamlConfig;
 
 abstract class Command extends BaseCommand
 {
@@ -33,28 +35,7 @@ abstract class Command extends BaseCommand
 
         $this->cwd = getcwd();
         $this->filesystem = new \Gaufrette\Filesystem(new Local($this->cwd));
+        $this->systemConfig = new JsonConfig($this->filesystem->get('.go/config.json'));
+        $this->config = new YamlConfig($this->filesystem->get($this->systemConfig->get('config_dir').'/deploy.yml'));
     }
-
-    protected function getConfig($env)
-    {
-        if (null === $this->config) {
-            $this->config = Yaml::parse($this->filesystem->read($this->getSetting('config_dir').'/deploy.yml'));
-        }
-
-        if (!isset($this->config[$env])) {
-            throw new \InvalidArgumentException(sprintf('The env %s does not exists', $env));
-        }
-
-        return $this->config[$env];
-    }
-
-    protected function getSetting($setting)
-    {
-        if (null === $this->systemConfig) {
-            $this->systemConfig = json_decode($this->filesystem->read('.go/config.json'));
-        }
-
-        return $this->systemConfig[$setting];
-    }
-
 }

@@ -2,9 +2,9 @@
 
 namespace Go\Deployer\Strategy;
 
-use \Go\Deployer\Deployer;
+use \Go\Config\ConfigInterface;
 
 interface StrategyInterface
 {
-    public function deploy(Deployer $deployer, $go);
+    public function deploy(ConfigInterface $config, $env, $go);
 }

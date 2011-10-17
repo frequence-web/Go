@@ -38,8 +38,9 @@ EOF
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        require_once $this->getSetting('config_dir').'/Deploy.php';
-        $deployer = new AppDeployer($this->getConfig($input->getArgument('env')), $output);
+        require_once $this->systemConfig->get('config_dir').'/Deploy.php';
+
+        $deployer = new AppDeployer($this->config, $input->getArgument('env'), $output);
         $deployer->deploy(new Rsync($output), $input->getOption('go'));
     }
 }

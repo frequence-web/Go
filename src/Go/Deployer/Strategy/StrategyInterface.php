@@ -2,7 +2,7 @@
 
 namespace Go\Deployer\Strategy;
 
-use \Go\Deployer\Deployer;
+use Go\Deployer\Deployer;
 
 interface StrategyInterface
 {

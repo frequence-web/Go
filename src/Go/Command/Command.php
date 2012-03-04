@@ -2,15 +2,15 @@
 
 namespace Go\Command;
 
-use \Symfony\Component\Console\Command\Command as BaseCommand,
-    \Symfony\Component\Console\Input\InputInterface,
-    \Symfony\Component\Console\Output\OutputInterface,
-    \Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Console\Command\Command as BaseCommand,
+    Symfony\Component\Console\Input\InputInterface,
+    Symfony\Component\Console\Output\OutputInterface,
+    Symfony\Component\Yaml\Yaml;
 
-use \Gaufrette\Filesystem,
-    \Gaufrette\Adapter\Local;
+use Gaufrette\Filesystem,
+    Gaufrette\Adapter\Local;
 
-use \Go\Exception\NotAGoDirectoryException;
+use Go\Exception\NotAGoDirectoryException;
 
 abstract class Command extends BaseCommand
 {

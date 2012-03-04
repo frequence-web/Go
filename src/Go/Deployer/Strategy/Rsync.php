@@ -2,10 +2,10 @@
 
 namespace Go\Deployer\Strategy;
 
-use \Symfony\Component\Process\Process,
-    \Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process,
+    Symfony\Component\Console\Output\OutputInterface;
 
-use \Go\Deployer\Deployer;
+use Go\Deployer\Deployer;
 
 class Rsync implements StrategyInterface
 {

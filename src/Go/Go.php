@@ -2,7 +2,7 @@
 
 namespace Go;
 
-use \Symfony\Component\Console\Application;
+use Symfony\Component\Console\Application;
 
 class Go extends Application
 {

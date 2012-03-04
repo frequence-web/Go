@@ -2,19 +2,19 @@
 
 namespace Go\Command;
 
-use \Symfony\Component\Console\Input\InputInterface,
-    \Symfony\Component\Console\Output\OutputInterface,
-    \Symfony\Component\Console\Input\InputArgument,
-    \Symfony\Component\Console\Input\InputOption,
-    \Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Console\Input\InputInterface,
+    Symfony\Component\Console\Output\OutputInterface,
+    Symfony\Component\Console\Input\InputArgument,
+    Symfony\Component\Console\Input\InputOption,
+    Symfony\Component\Yaml\Yaml;
 
-use \Gaufrette\Filesystem,
-    \Gaufrette\Adapter\Local;
+use Gaufrette\Filesystem,
+    Gaufrette\Adapter\Local;
 
-use \Go\Exception\AlreadyAGoDirectoryException,
-    \Go\Deployer\Deployer,
-    \Go\Deployer\Deploy as AppDeployer,
-    \Go\Deployer\Strategy\Rsync;
+use Go\Exception\AlreadyAGoDirectoryException,
+    Go\Deployer\Deployer,
+    Go\Deployer\Deploy as AppDeployer,
+    Go\Deployer\Strategy\Rsync;
 
 class Deploy extends Command
 {

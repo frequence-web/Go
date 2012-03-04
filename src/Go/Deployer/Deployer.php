@@ -2,9 +2,9 @@
 
 namespace Go\Deployer;
 
-use \Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
-use \OOSSH\SSH2\Connection;
+use OOSSH\SSH2\Connection;
 
 abstract class Deployer
 {
@@ -20,7 +20,7 @@ abstract class Deployer
      */
     protected $ssh;
 
-    function __construct($config, OutputInterface $output)
+    public function __construct($config, OutputInterface $output)
     {
         $this->config = $config;
         $this->output = $output;

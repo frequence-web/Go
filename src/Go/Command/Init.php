@@ -2,15 +2,15 @@
 
 namespace Go\Command;
 
-use \Symfony\Component\Console\Input\InputInterface,
-    \Symfony\Component\Console\Output\OutputInterface,
-    \Symfony\Component\Console\Input\InputArgument,
-    \Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Console\Input\InputInterface,
+    Symfony\Component\Console\Output\OutputInterface,
+    Symfony\Component\Console\Input\InputArgument,
+    Symfony\Component\Yaml\Yaml;
 
-use \Gaufrette\Filesystem,
-    \Gaufrette\Adapter\Local;
+use Gaufrette\Filesystem,
+    Gaufrette\Adapter\Local;
 
-use \Go\Exception\AlreadyAGoDirectoryException;
+use Go\Exception\AlreadyAGoDirectoryException;
 
 class Init extends Command
 {

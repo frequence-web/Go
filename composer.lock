@@ -1,0 +1,29 @@
+{
+    "hash": "43b4ab885fd49cff76d6f22e4fdbd390",
+    "packages": [
+        {
+            "package": "knplabs/gaufrette",
+            "version": "dev-master",
+            "source-reference": "012d3e3894493162de4e4176b8ed292395a12b2f"
+        },
+        {
+            "package": "symfony/class-loader",
+            "version": "dev-master",
+            "source-reference": "8bceaa2f1fed52f6285b2cea39e7ae37fbea1c9b"
+        },
+        {
+            "package": "symfony/console",
+            "version": "v2.0.10"
+        },
+        {
+            "package": "symfony/process",
+            "version": "v2.0.10"
+        },
+        {
+            "package": "yohang/oossh",
+            "version": "dev-master",
+            "source-reference": "72132cdcd5f2d2ed55b9920b30f5eb9fb496d56e"
+        }
+    ],
+    "aliases": []
+}

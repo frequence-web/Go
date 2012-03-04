@@ -43,7 +43,7 @@ EOF
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->filesystem->write('.go/config.yml', Yaml::dump(array(
+        $this->filesystem->write('.go/config.json', json_encode(array(
            'config_dir' => $input->getArgument('dir')
         )));
 

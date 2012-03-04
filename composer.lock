@@ -1,5 +1,5 @@
 {
-    "hash": "43b4ab885fd49cff76d6f22e4fdbd390",
+    "hash": "1725425c84993a4bc4e0a1c6f9af7030",
     "packages": [
         {
             "package": "knplabs/gaufrette",
@@ -17,6 +17,10 @@
         },
         {
             "package": "symfony/process",
+            "version": "v2.0.10"
+        },
+        {
+            "package": "symfony/yaml",
             "version": "v2.0.10"
         },
         {

@@ -5,7 +5,8 @@ namespace Go\Deployer\Strategy;
 use Symfony\Component\Process\Process,
     Symfony\Component\Console\Output\OutputInterface;
 
-use Go\Deployer\Deployer;
+use Go\Deployer\Deployer,
+    Go\Config\ConfigInterface;
 
 class Rsync implements StrategyInterface
 {
@@ -17,16 +18,16 @@ class Rsync implements StrategyInterface
     }
 
 
-    public function deploy(Deployer $deployer, $go)
+    public function deploy(ConfigInterface $config, $env, $go)
     {
-        $commandLine  = 'rsync -azC --force --delete --progress -e "ssh -p'.$deployer->getPort().'"';
+        $commandLine  = 'rsync -azC --force --delete --progress -e "ssh -p'.$config->get($env.'.port').'"';
 
-        foreach ($deployer->getExclude() as $exclude) {
+        foreach ($config->get($env.'.exclude') as $exclude) {
             $commandLine .= ' --exclude='.$exclude;
         }
 
         $commandLine .= ' '.getcwd().'/ ';
-        $commandLine .= $deployer->getUser().'@'.$deployer->getHost().':'.$deployer->getRemoteDir();
+        $commandLine .= $config->get($env.'.user').'@'.$config->get($env.'.host').':'.$config->get($env.'.remote_dir');
 
         if ($go !== true) {
             $commandLine .= ' --dry-run';

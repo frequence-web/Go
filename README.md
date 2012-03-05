@@ -8,7 +8,7 @@ Go is under heavy development and it's probably a very bad idea to use it for yo
 Init
 -----
 
-This tool is experimental, so there is no installation process for now. Git clone it and `ln -vs the go executable in your path.
+This tool is experimental, so there is no installation process for now. Git clone it and `ln -vs` the go executable in your path.
 
     $ go init [config dir]
 
@@ -33,7 +33,7 @@ Go supports multiple deployment strategies. For now, there's two :
     <dt>Rsync</dt>
     <dd>Deploys your code in a remote directory via rsync</dd>
     <dt>VersionedRsync</dt>
-    <dd>Like Rsync but puts code into a subdirectory (no ln, you can do it :))</dd>
+    <dd>Like Rsync but puts code into a subdirectory (no `ln`, you can do it :))</dd>
 </dl>
 
 SSH
@@ -41,9 +41,14 @@ SSH
 Go uses the (alpha) OOSSH lib, and allows you to run commands on your remote server.
 The available methods are, in the Deploy.php class :
 
- * $this->exec($command)
- * $this->sudo($command)
- * $this->copy($from, $to, $recursive = false)
+```php
+
+$this->exec($command);
+$this->sudo($command);
+$this->symlink($from, $to);
+$this->copy($from, $to, $recursive = false);
+
+```
 
 Note that the copy commands call `cp -p` and preserves owners, groups, and horodating.
 The classic usage of it is in the pre/post deploy commands (needs to clean cache ?)

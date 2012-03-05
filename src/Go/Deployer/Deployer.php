@@ -10,6 +10,10 @@ use Go\Deployer\Strategy\StrategyInterface,
     Go\Config\ConfigInterface,
     Go\Exception\EnvironmentNotFound;
 
+/**
+ * The base deployer class.
+ * This class will be overided by the user class
+ */
 abstract class Deployer
 {
     /**
@@ -39,6 +43,12 @@ abstract class Deployer
      */
     protected $ssh;
 
+    /**
+     * @param \Go\Config\ConfigInterface $config
+     * @param \Go\Config\ConfigInterface $systemConfig
+     * @param $env
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
     public function __construct(ConfigInterface $config, ConfigInterface $systemConfig, $env, OutputInterface $output)
     {
         $this->config       = $config;
@@ -51,6 +61,11 @@ abstract class Deployer
         }
     }
 
+    /**
+     * Deploys your application.
+     *
+     * @param $go
+     */
     public function deploy($go)
     {
         if (false !== $go) {
@@ -63,10 +78,26 @@ abstract class Deployer
         }
     }
 
+    /**
+     * Returns the deploy strategy
+     *
+     * @abstract
+     * @return \Go\Deployer\Strategy\StrategyInterface
+     */
     abstract protected function getStrategy();
 
+    /**
+     * Commands executed before deployment
+     *
+     * @abstract
+     */
     abstract protected function preDeploy();
 
+    /**
+     * Commands executed after deployment
+     *
+     * @abstract
+     */
     abstract protected function postDeploy();
 
     protected function getSshAuthentication()

@@ -108,10 +108,10 @@ abstract class Deployer
     /**
      * @return \OOSSH\SSH2\Connection
      */
-    protected function getSsh()
+    public function getSsh()
     {
         if (null === $this->ssh) {
-            $this->ssh = new Connection($this->getHost(), $this->getPort());
+            $this->ssh = new Connection($this->config->get($this->env.'.host'), $this->config->get($this->env.'.port'));
             $this->ssh
                 ->connect()
                 ->authenticate($this->getSshAuthentication());
@@ -120,30 +120,41 @@ abstract class Deployer
         return $this->ssh;
     }
 
-    protected function exec($command)
+    public function exec($command)
     {
+        $this->addOutput(sprintf('<info> >> %s</info>', $command));
         $that = $this;
         $this->getSsh()->exec($command, function($stdio, $stderr) use ($that) {
-            $that->addOutput($stdio);
-            $that->addOutput($stderr);
+            $that
+                ->addOutput($stdio)
+                ->addOutput($stderr);
         });
 
         return $this;
     }
 
-    protected function sudo($command)
+    public function copy($from, $to, $recursive = false)
+    {
+        return $this->exec(sprintf('cp -p%s %s %s', $recursive ? 'r' : '', $from, $to));
+    }
+
+    public function sudo($command)
     {
         return $this->exec('sudo '.$command);
     }
 
-    protected function symfony($command)
+    public function symfony($command)
     {
         return $this->exec('php symfony '.$command);
     }
 
     public function addOutput($output)
     {
-        $this->output->write($output);
+        if ($output) {
+            $this->output->writeln($output);
+        }
+
+        return $this;
     }
 
 }

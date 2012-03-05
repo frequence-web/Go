@@ -41,13 +41,13 @@ class Rsync implements StrategyInterface
         $commandLine  = 'rsync -azC --force --delete --progress -e "ssh -p'.$config->get($env.'.port').'"';
         $commandLine .= ' --exclude-from='.$this->prepareExcludeFile($config->get($env.'.exclude'));
         $commandLine .= ' '.getcwd().'/ ';
-        $commandLine .= $config->get($env.'.user').'@'.$config->get($env.'.host').':'.$config->get($env.'.remote_dir').'/';
+        $commandLine .= $config->get($env.'.user').'@'.$config->get($env.'.host').':'.$this->getRemotePath($config, $env);
 
         if ($go !== true) {
             $commandLine .= ' --dry-run';
         }
 
-        $this->getOutput()->writeln(sprintf('<info>%s</info>', $commandLine));
+        $this->getOutput()->writeln(sprintf('<info> >> %s</info>', $commandLine));
 
         $that = $this;
         $process = new Process($commandLine, getcwd());
@@ -62,6 +62,11 @@ class Rsync implements StrategyInterface
     public function getOutput()
     {
         return $this->output;
+    }
+
+    protected function getRemotePath(ConfigInterface $config, $env)
+    {
+        return $config->get($env.'.remote_dir').'/';
     }
 
     /**

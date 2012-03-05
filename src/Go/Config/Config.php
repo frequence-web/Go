@@ -66,6 +66,9 @@ abstract class Config implements ConfigInterface
         $keys = explode('.', $key);
         $value = $this->config;
         for ($i = 0 ; $i < count($keys) ; $i++) {
+            if (!isset($value[$keys[$i]])) {
+                return $default;
+            }
             $value = $value[$keys[$i]];
         }
 

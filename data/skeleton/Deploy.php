@@ -13,22 +13,22 @@ use OOSSH\SSH2\Authentication\Password;
 
 class Deploy extends Deployer
 {
-    public function preDeploy()
+    public function preDeploy($go)
     {
 
     }
 
-    public function postDeploy()
+    public function postDeploy($go)
     {
 
     }
 
-    public function preDeployProduction()
+    public function preDeployProduction($go)
     {
 
     }
 
-    public function postDeployProduction()
+    public function postDeployProduction($go)
     {
 
     }

@@ -21,7 +21,7 @@ class VersionedRsync extends Rsync
 
     public function deploy(ConfigInterface $config, $env, $go)
     {
-        $this->version  = $this->systemConfig->get('rsync-remote-version-'.$env, 0) + 1;
+        $this->version  = $this->systemConfig->get('rsync.remote-version.'.$env, 0) + 1;
 
         if ($this->version > 1) {
             $this->deployer->copy(
@@ -33,7 +33,7 @@ class VersionedRsync extends Rsync
 
         parent::deploy($config, $env, $go);
 
-        $this->systemConfig->set('rsync-remote-version-'.$env, $this->version);
+        $this->systemConfig->set('rsync.remote-version.'.$env, $this->version);
     }
 
     protected function getRemotePath(ConfigInterface $config, $env)

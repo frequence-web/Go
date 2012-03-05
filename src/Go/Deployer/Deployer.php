@@ -68,13 +68,16 @@ abstract class Deployer
      */
     public function deploy($go)
     {
-        if (false !== $go) {
-            $this->preDeploy($go);
+        $this->preDeploy($go);
+        if (method_exists($this, $method = 'preDeploy'.ucfirst($this->env))) {
+            $this->$method($go);
         }
+
         $this->getStrategy()->deploy($this->config, $this->env, $go);
 
-        if (false !== $go) {
-            $this->postDeploy($go);
+        $this->postDeploy($go);
+        if (method_exists($this, $method = 'postDeploy'.ucfirst($this->env))) {
+            $this->$method($go);
         }
     }
 
@@ -91,14 +94,14 @@ abstract class Deployer
      *
      * @abstract
      */
-    abstract protected function preDeploy();
+    abstract protected function preDeploy($go);
 
     /**
      * Commands executed after deployment
      *
      * @abstract
      */
-    abstract protected function postDeploy();
+    abstract protected function postDeploy($go);
 
     protected function getSshAuthentication()
     {
@@ -141,11 +144,6 @@ abstract class Deployer
     public function sudo($command)
     {
         return $this->exec('sudo '.$command);
-    }
-
-    public function symfony($command)
-    {
-        return $this->exec('php symfony '.$command);
     }
 
     public function addOutput($output)

@@ -136,6 +136,11 @@ abstract class Deployer
         return $this;
     }
 
+    public function symlink($from, $to)
+    {
+        return $this->exec(sprintf('ln -s %s %s', $from, $to));
+    }
+
     public function copy($from, $to, $recursive = false)
     {
         return $this->exec(sprintf('cp -p%s %s %s', $recursive ? 'r' : '', $from, $to));

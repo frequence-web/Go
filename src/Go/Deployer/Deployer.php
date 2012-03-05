@@ -17,6 +17,16 @@ abstract class Deployer
      */
     protected $config;
 
+    /**
+     * @var \Go\Config\ConfigInterface
+     */
+    protected $systemConfig;
+
+    /**
+     * The environment to deploy (a string, like "production" or "server-1")
+     *
+     * @var string
+     */
     protected $env;
 
     /**
@@ -29,32 +39,35 @@ abstract class Deployer
      */
     protected $ssh;
 
-    public function __construct(ConfigInterface $config, $env, OutputInterface $output)
+    public function __construct(ConfigInterface $config, ConfigInterface $systemConfig, $env, OutputInterface $output)
     {
-        $this->config = $config;
-        $this->output = $output;
-        $this->env = $env;
+        $this->config       = $config;
+        $this->systemConfig = $systemConfig;
+        $this->output       = $output;
+        $this->env          = $env;
 
         if (null === $this->config->get($env)) {
             throw new EnvironmentNotFound($env);
         }
     }
 
-    abstract function preDeploy();
-
-    abstract function postDeploy();
-
-    public function deploy(StrategyInterface $strategy, $go)
+    public function deploy($go)
     {
         if (false !== $go) {
             $this->preDeploy($go);
         }
-        $strategy->deploy($this->config, $this->env, $go);
+        $this->getStrategy()->deploy($this->config, $this->env, $go);
 
         if (false !== $go) {
             $this->postDeploy($go);
         }
     }
+
+    abstract protected function getStrategy();
+
+    abstract protected function preDeploy();
+
+    abstract protected function postDeploy();
 
     protected function getSshAuthentication()
     {
@@ -79,12 +92,10 @@ abstract class Deployer
     protected function exec($command)
     {
         $that = $this;
-        $this->getSsh()->exec($command, function($stdio, $stderr) use ($that)
-            {
-                $that->addOutput($stdio);
-                $that->addOutput($stderr);
-            }
-        );
+        $this->getSsh()->exec($command, function($stdio, $stderr) use ($that) {
+            $that->addOutput($stdio);
+            $that->addOutput($stderr);
+        });
 
         return $this;
     }

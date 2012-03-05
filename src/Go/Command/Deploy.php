@@ -13,8 +13,7 @@ use Gaufrette\Filesystem,
 
 use Go\Exception\AlreadyAGoDirectoryException,
     Go\Deployer\Deployer,
-    Go\Deployer\Deploy as AppDeployer,
-    Go\Deployer\Strategy\Rsync;
+    Go\Deployer\Deploy as AppDeployer;
 
 class Deploy extends Command
 {
@@ -40,7 +39,7 @@ EOF
     {
         require_once $this->systemConfig->get('config_dir').'/Deploy.php';
 
-        $deployer = new AppDeployer($this->config, $input->getArgument('env'), $output);
-        $deployer->deploy(new Rsync($output, $this->systemConfig), $input->getOption('go'));
+        $deployer = new AppDeployer($this->config, $this->systemConfig, $input->getArgument('env'), $output);
+        $deployer->deploy($input->getOption('go'));
     }
 }

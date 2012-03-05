@@ -2,14 +2,15 @@
 
 namespace Go\Deployer;
 
-use \Go\Deployer\Deployer;
+use Go\Deployer\Deployer,
+    Go\Deployer\Strategy\Rsync;
 
-use \OOSSH\SSH2\Authentication\PasswordAuthentication;
+use OOSSH\SSH2\Authentication\Password;
 
 /**
  * Your deployment instruction
  */
- 
+
 class Deploy extends Deployer
 {
     public function preDeploy()
@@ -38,6 +39,11 @@ class Deploy extends Deployer
          * Warning : this is an example, you'd better to use \OOSSH\SSH2\Authentication\PublicKeyAuthentication !
          * Please refer to the OOSSH configuration : https://github.com/frequence-web/OOSSH
          */
-        return new PasswordAuthentication('deploy', 'deploy');
+        return new Password('deploy', 'deploy');
+    }
+
+    protected function getStrategy()
+    {
+        return new Rsync($this->output, $this->systemConfig);
     }
 }

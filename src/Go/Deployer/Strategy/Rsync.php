@@ -16,11 +16,17 @@ class Rsync implements StrategyInterface
     protected $output;
 
     /**
+     * @var \Go\Config\ConfigInterface
+     */
+    protected $systemConfig;
+
+    /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function __construct(OutputInterface $output)
+    public function __construct(OutputInterface $output, ConfigInterface $systemConfig)
     {
         $this->output = $output;
+        $this->systemConfig = $systemConfig;
     }
 
     /**
@@ -33,13 +39,9 @@ class Rsync implements StrategyInterface
     public function deploy(ConfigInterface $config, $env, $go)
     {
         $commandLine  = 'rsync -azC --force --delete --progress -e "ssh -p'.$config->get($env.'.port').'"';
-
-        foreach ($config->get($env.'.exclude') as $exclude) {
-            $commandLine .= ' --exclude='.$exclude;
-        }
-
+        $commandLine .= ' --exclude-from='.$this->prepareExcludeFile($config->get($env.'.exclude'));
         $commandLine .= ' '.getcwd().'/ ';
-        $commandLine .= $config->get($env.'.user').'@'.$config->get($env.'.host').':'.$config->get($env.'.remote_dir');
+        $commandLine .= $config->get($env.'.user').'@'.$config->get($env.'.host').':'.$config->get($env.'.remote_dir').'/';
 
         if ($go !== true) {
             $commandLine .= ' --dry-run';
@@ -60,5 +62,19 @@ class Rsync implements StrategyInterface
     public function getOutput()
     {
         return $this->output;
+    }
+
+    /**
+     * Write excludes files in a rsync_exclude file
+     *
+     * @param array $excludes
+     * @return string
+     */
+    private function prepareExcludeFile(array $excludes)
+    {
+        $excludeFilePath = $this->systemConfig->get('config_dir').'/rsync_exlude.txt';
+        file_put_contents($excludeFilePath, implode("\n", $excludes));
+
+        return $excludeFilePath;
     }
 }

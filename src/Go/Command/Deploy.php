@@ -41,6 +41,6 @@ EOF
         require_once $this->systemConfig->get('config_dir').'/Deploy.php';
 
         $deployer = new AppDeployer($this->config, $input->getArgument('env'), $output);
-        $deployer->deploy(new Rsync($output), $input->getOption('go'));
+        $deployer->deploy(new Rsync($output, $this->systemConfig), $input->getOption('go'));
     }
 }

@@ -14,6 +14,10 @@ use Go\Exception\NotAGoDirectoryException,
     Go\Config\JsonConfig,
     Go\Config\YamlConfig;
 
+/**
+ * The base Go command.
+ * Providers some tools for init, deploy, etc. commands
+ */
 abstract class Command extends BaseCommand
 {
     protected $cwd;
@@ -23,10 +27,27 @@ abstract class Command extends BaseCommand
      */
     protected $filesystem;
 
+    /**
+     * The config handler
+     *
+     * @var \Go\Config\ConfigInterface
+     */
     protected $config;
 
+    /**
+     * The system config handlers
+     *
+     * @var \Go\Config\ConfigInterface
+     */
     protected $systemConfig;
 
+    /**
+     * Command initialization
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @throws \Go\Exception\NotAGoDirectoryException
+     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         if (!is_dir(getcwd() . '/.go')) {

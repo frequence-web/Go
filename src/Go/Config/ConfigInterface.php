@@ -2,8 +2,11 @@
 
 namespace Go\Config;
 
-use \Gaufrette\File;
+use Gaufrette\File;
 
+/**
+ * Interface that config handlers must implements
+ */
 interface ConfigInterface
 {
     /**
@@ -55,7 +58,7 @@ interface ConfigInterface
 
     /**
      * Returns the config array
-     * 
+     *
      * @abstract
      * @return array|mixed
      */

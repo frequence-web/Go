@@ -3,10 +3,12 @@ production:
     host:       your.host
     port:       22
     user:       deploy
-    remote_dir: /var/www/
+    remote_dir: /path/to/remote/dir
     exclude:
         - .git
         - .svn
         - .idea
         - .hg
+        - .go
         - nbproject
+        - config/go

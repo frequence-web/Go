@@ -2,7 +2,9 @@
 
 namespace Go\Exception;
 
-class NotAGoDirectoryException extends \Exception
+use Go\Exception;
+
+class NotAGoDirectoryException extends Exception
 {
     public function __construct()
     {

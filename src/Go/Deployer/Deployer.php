@@ -7,7 +7,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use OOSSH\SSH2\Connection;
 
 use Go\Deployer\Strategy\StrategyInterface,
-    Go\Config\ConfigInterface;
+    Go\Config\ConfigInterface,
+    Go\Exception\EnvironmentNotFound;
 
 abstract class Deployer
 {
@@ -33,6 +34,10 @@ abstract class Deployer
         $this->config = $config;
         $this->output = $output;
         $this->env = $env;
+
+        if (null === $this->config->get($env)) {
+            throw new EnvironmentNotFound($env);
+        }
     }
 
     abstract function preDeploy();

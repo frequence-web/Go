@@ -10,14 +10,26 @@ use Go\Deployer\Deployer,
 
 class Rsync implements StrategyInterface
 {
+    /**
+     * @var \Symfony\Component\Console\Output\OutputInterface
+     */
     protected $output;
 
-    function __construct(OutputInterface $output)
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    public function __construct(OutputInterface $output)
     {
         $this->output = $output;
     }
 
-
+    /**
+     * Deploys your application via rsync
+     *
+     * @param \Go\Config\ConfigInterface $config
+     * @param $env
+     * @param $go
+     */
     public function deploy(ConfigInterface $config, $env, $go)
     {
         $commandLine  = 'rsync -azC --force --delete --progress -e "ssh -p'.$config->get($env.'.port').'"';
@@ -33,10 +45,12 @@ class Rsync implements StrategyInterface
             $commandLine .= ' --dry-run';
         }
 
+        $this->getOutput()->writeln(sprintf('<info>%s</info>', $commandLine));
+
         $that = $this;
         $process = new Process($commandLine, getcwd());
         $process->run(function($type, $data) use ($that) {
-            $that->getOutput()->write($data);
+            $that->getOutput()->writeln($data);
         });
     }
 
@@ -47,6 +61,4 @@ class Rsync implements StrategyInterface
     {
         return $this->output;
     }
-
-
 }

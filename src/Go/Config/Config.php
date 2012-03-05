@@ -6,10 +6,23 @@ use \Gaufrette\File;
 
 abstract class Config implements ConfigInterface
 {
+    /**
+     * The config array
+     *
+     * @var array
+     */
     protected $config = array();
 
+    /**
+     * @var \Gaufrette\File|null
+     */
     protected $file;
 
+    /**
+     * Constructs and load configuration
+     *
+     * @param \Gaufrette\File|null $file
+     */
     function __construct(File $file = null)
     {
         $this->file = $file;
@@ -18,6 +31,9 @@ abstract class Config implements ConfigInterface
         }
     }
 
+    /**
+     * Destructor, dumps the configuration
+     */
     public function __destruct()
     {
         if (null !== $this->file) {
@@ -26,6 +42,8 @@ abstract class Config implements ConfigInterface
     }
 
     /**
+     * Adds values to the config
+     *
      * @param array $values
      * @return Config
      */
@@ -46,8 +64,8 @@ abstract class Config implements ConfigInterface
     public function get($key, $default = null)
     {
         $keys = explode('.', $key);
-        $value = $this->config[$keys[0]];
-        for ($i = 1 ; $i < count($keys) ; $i++) {
+        $value = $this->config;
+        for ($i = 0 ; $i < count($keys) ; $i++) {
             $value = $value[$keys[$i]];
         }
 
@@ -77,6 +95,8 @@ abstract class Config implements ConfigInterface
     }
 
     /**
+     * Explode keys like foo.bar.a into multi-dimensional arrays
+     *
      * @param $key
      * @param $value
      * @return array
@@ -93,6 +113,13 @@ abstract class Config implements ConfigInterface
         }
     }
 
+    /**
+     * Deep merges configuration.
+     *
+     * @param array $ar1
+     * @param array $ar2
+     * @return array
+     */
     protected function merge(array $ar1, array $ar2)
     {
         $result = $ar1;

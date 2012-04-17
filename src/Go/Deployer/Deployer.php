@@ -2,7 +2,8 @@
 
 namespace Go\Deployer;
 
-use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\OutputInterface,
+    Symfony\Component\Process\Process;
 
 use OOSSH\SSH2\Connection;
 
@@ -122,8 +123,24 @@ abstract class Deployer
 
         return $this->ssh;
     }
+    
+    public function execOnLocal($command, $path=null, $timeout=null) {
+        $process = new Process($command, (!is_null($path)) ? $path : getcwd());
+        
+        if(is_integer($timeout)) {
+            $process->setTimeout($timeout);
+        }
+        
+        $process->run();
+        
+        if(!$process->isSuccessful()) {
+            $this->addOutput(sprintf('<error>The command "%s" didn\'t work. Error: %s</error>', $command, $process->getErrorOutput()));
+        }
+        
+        return $this;
+    }
 
-    public function exec($command)
+    public function execOnRemote($command)
     {
         $this->addOutput(sprintf('<info> >> %s</info>', $command));
         $that = $this;

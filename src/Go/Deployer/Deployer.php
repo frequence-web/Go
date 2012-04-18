@@ -123,24 +123,24 @@ abstract class Deployer
 
         return $this->ssh;
     }
-    
-    public function execOnLocal($command, $path=null, $timeout=null) {
-        $process = new Process($command, (!is_null($path)) ? $path : getcwd());
-        
-        if(is_integer($timeout)) {
+
+    public function localExec($command, $path = null, $timeout = null) {
+        $process = new Process($command, $path ?: getcwd());
+
+        if(null !== $timeout) {
             $process->setTimeout($timeout);
         }
-        
+
         $process->run();
-        
+
         if(!$process->isSuccessful()) {
             $this->addOutput(sprintf('<error>The command "%s" didn\'t work. Error: %s</error>', $command, $process->getErrorOutput()));
         }
-        
+
         return $this;
     }
 
-    public function execOnRemote($command)
+    public function remoteExec($command)
     {
         $this->addOutput(sprintf('<info> >> %s</info>', $command));
         $that = $this;
@@ -155,17 +155,17 @@ abstract class Deployer
 
     public function symlink($from, $to)
     {
-        return $this->exec(sprintf('ln -s %s %s', $from, $to));
+        return $this->remoteExec(sprintf('ln -s %s %s', $from, $to));
     }
 
     public function copy($from, $to, $recursive = false)
     {
-        return $this->exec(sprintf('cp -p%s %s %s', $recursive ? 'r' : '', $from, $to));
+        return $this->remoteExec(sprintf('cp -p%s %s %s', $recursive ? 'r' : '', $from, $to));
     }
 
     public function sudo($command)
     {
-        return $this->exec('sudo '.$command);
+        return $this->remoteExec('sudo '.$command);
     }
 
     public function addOutput($output)

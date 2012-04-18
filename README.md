@@ -43,7 +43,7 @@ The available methods are, in the Deploy.php class :
 
 ```php
 
-$this->exec($command);
+$this->remoteExec($command);
 $this->sudo($command);
 $this->symlink($from, $to);
 $this->copy($from, $to, $recursive = false);

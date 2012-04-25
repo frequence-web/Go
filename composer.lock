@@ -4,30 +4,34 @@
         {
             "package": "knplabs/gaufrette",
             "version": "dev-master",
-            "source-reference": "012d3e3894493162de4e4176b8ed292395a12b2f"
-        },
-        {
-            "package": "symfony/class-loader",
-            "version": "dev-master",
-            "source-reference": "8bceaa2f1fed52f6285b2cea39e7ae37fbea1c9b"
+            "source-reference": "575f2d64974fe95b9197f58899da3be06eb6ffe5"
         },
         {
             "package": "symfony/console",
-            "version": "v2.0.10"
+            "version": "2.0.x-dev",
+            "source-reference": "b8b23721c41af153ab2506ddae9d89440ec6a538"
+        },
+        {
+            "package": "symfony/finder",
+            "version": "dev-master",
+            "source-reference": "57ec7198a70e6c40e450ba66cc2f8ecab98746c8"
         },
         {
             "package": "symfony/process",
-            "version": "v2.0.10"
+            "version": "2.0.x-dev",
+            "source-reference": "v2.0.12"
         },
         {
             "package": "symfony/yaml",
-            "version": "v2.0.10"
+            "version": "2.0.x-dev",
+            "source-reference": "v2.0.12"
         },
         {
             "package": "yohang/oossh",
             "version": "dev-master",
-            "source-reference": "2927dea2ca0853c5ac116940f3e076ba686cde83"
+            "source-reference": "17a6a56f75aeeab665fb1e9443443788758e4c65"
         }
     ],
+    "packages-dev": null,
     "aliases": []
 }

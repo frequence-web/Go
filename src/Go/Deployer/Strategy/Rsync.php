@@ -38,7 +38,7 @@ class Rsync implements StrategyInterface
      */
     public function deploy(ConfigInterface $config, $env, $go)
     {
-        $commandLine  = 'rsync -azC --force --delete --progress -e "ssh -p'.$config->get($env.'.port').'"';
+        $commandLine  = 'rsync -az --force --delete --progress -e "ssh -p'.$config->get($env.'.port').'"';
         $commandLine .= ' --exclude-from='.$this->prepareExcludeFile($config->get($env.'.exclude'));
         $commandLine .= ' '.getcwd().'/ ';
         $commandLine .= $config->get($env.'.user').'@'.$config->get($env.'.host').':'.$this->getRemotePath($config, $env);

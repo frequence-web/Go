@@ -3,7 +3,7 @@ Go
 
 Go is a easy-to-use PHP deployment manager
 
-Go is under heavy development and it's probably a very bad idea to use it for your killer mega huge application ;)
+But… Don't use it, it never pass the status of experiment. Use [Deployer](http://deployer.org/), [Fabric](http://www.fabfile.org/) or [Capistrano](http://capistranorb.com/). But not this thing. Please.
 
 Installation
 ------------
